@@ -1,7 +1,14 @@
+import { useContext, useEffect } from "react";
 import type { ProductDetailsProps } from "./ProductDetailsProps";
+import PreviousItemPageContext from "../../shared/PreviousItemPage/PreviousItemPageProvider";
 
 function ProductDetails({ product }: ProductDetailsProps) {
   const { title, image, description, price, category, rating } = product;
+  const { savePreviousItemPage } = useContext(PreviousItemPageContext);
+
+  useEffect(() => {
+    savePreviousItemPage(window.location.pathname);
+  }, [savePreviousItemPage]);
 
   return (
     <div className="h-100 d-flex justify-content-center align-items-center">

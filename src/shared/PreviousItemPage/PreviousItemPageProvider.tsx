@@ -1,39 +1,29 @@
-import {
-  createContext,
-  useEffect,
-  useState,
-  type PropsWithChildren,
-} from "react";
-import { useLocation } from "react-router-dom";
+import { createContext, useState, type PropsWithChildren } from "react";
 
 interface PreviousItemPageState {
   previousItemPage: string | null;
-  setPreviousItemPage: (path: string) => void;
+  savePreviousItemPage: (path: string) => void;
 }
 
 const PreviousItemPageContext = createContext<PreviousItemPageState>({
   previousItemPage: null,
-  setPreviousItemPage: () => {},
+  savePreviousItemPage: () => {},
 });
 
 function PreviousItemPageProvider({ children }: PropsWithChildren) {
   const savePath = sessionStorage.getItem("previousItemPage");
-  const location = useLocation();
   const [previousItemPage, setPreviousItemPage] = useState<string | null>(
     savePath
   );
+  const savePreviousItemPage = () => {
+    setPreviousItemPage(location.pathname);
+    sessionStorage.setItem("previousItemPage", location.pathname);
+  };
 
   const context: PreviousItemPageState = {
     previousItemPage,
-    setPreviousItemPage,
+    savePreviousItemPage,
   };
-
-  useEffect(() => {
-    if (location.pathname.includes("/products/")) {
-      setPreviousItemPage(location.pathname);
-      sessionStorage.setItem("previousItemPage", location.pathname);
-    }
-  }, [location]);
 
   return (
     <PreviousItemPageContext.Provider value={context}>
