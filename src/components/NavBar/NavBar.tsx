@@ -19,7 +19,7 @@ function NavBar() {
   return (
     <div className="h-100">
       <Outlet />
-      <nav className="navbar navbar-expand-lg bg-body-tertiary position-absolute top-0 left-0 right-0 w-100 shadow">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary position-fixed top-0 left-0 right-0 w-100 shadow">
         <ul className="navbar-nav mb-2 mb-lg-0 d-flex flex-row gap-3 ms-5">
           <li className="nav-item">
             <a

@@ -12,7 +12,7 @@ function ContextMenu({ name, icon, children }: ContextMenuProps) {
     const panel = contextMenuPanel.current;
     if (trigger && panel) {
       panel.style.top = trigger.getBoundingClientRect().bottom + "px";
-      panel.style.left = trigger.getBoundingClientRect().left + "px";
+      panel.style.left = trigger.getBoundingClientRect().right - 130 + "px";
     }
   };
 

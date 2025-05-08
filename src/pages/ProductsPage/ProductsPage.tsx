@@ -58,6 +58,10 @@ function ProductsPage() {
       );
     } else if (productsFetchingResult.isSuccess && products) {
       if (products) {
+        const { label: sortingLabel, icon: sortingIcon } = sortingOptions.find(
+          (option) => option.sortType === sortType
+        )!;
+
         const sortedProducts = [...products];
         switch (sortType) {
           case SortType.Default:
@@ -81,16 +85,15 @@ function ProductsPage() {
         setContent(
           <main className="mt-5 pt-2">
             <ContextMenu
-              name="Sorting"
-              icon={<TiArrowUnsorted />}
+              name={`Sorting: ${sortingLabel}`}
+              icon={sortingIcon}
               className="context-menu"
             >
               {sortingOptions.map((option) => {
                 return (
                   <div key={option.sortType}>
                     <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
+                      onClick={() => {
                         setSortType(option.sortType);
                       }}
                       active={option.sortType === sortType}
