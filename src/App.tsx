@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+import { PreviousItemPageProvider } from "./components/PreviousItemPage/PreviousItemPageProvider";
 import HomePage from "./pages/HomePage/HomePage";
 import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import ProductItemPage from "./pages/ProductItemPage/ProductItemPage";
@@ -9,14 +10,19 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route element={<NavBar />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:productId" element={<ProductItemPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Route>
-        </Routes>
+        <PreviousItemPageProvider>
+          <Routes>
+            <Route element={<NavBar />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route
+                path="/products/:productId"
+                element={<ProductItemPage />}
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
+          </Routes>
+        </PreviousItemPageProvider>
       </BrowserRouter>
     </>
   );
