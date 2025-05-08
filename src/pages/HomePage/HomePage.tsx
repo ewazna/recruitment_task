@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import PreviousItemPageContext from "../../components/PreviousItemPage/PreviousItemPageProvider";
+import PreviousItemPageContext from "../../shared/PreviousItemPage/PreviousItemPageProvider";
 
 function HomePage() {
   const { previousItemPage } = useContext(PreviousItemPageContext);
