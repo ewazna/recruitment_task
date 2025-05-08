@@ -72,7 +72,15 @@ button:focus-visible {
   background-color: #9ab5d3;
 }
 
-.list-container {
+.sorting-btn {
+  width:100%;
+  background-color: transparent;
+}
+.trigger-btn {
+  width:120px;
+}
+
+.main-container {
   margin-top:100px;
 }
 
@@ -93,4 +101,22 @@ button:focus-visible {
 .details-container {
   width:500px;
   height:150px;
+}
+
+.context-menu {
+  width:120px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: white;
+
+}
+
+#contextMenu {
+  border:none;
+  border-radius:5px;
+  filter: drop-shadow(0px 7px 12px #828282);
+  margin:0;
+  padding: 0;
+
 }

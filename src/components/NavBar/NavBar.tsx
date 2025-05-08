@@ -29,8 +29,8 @@ function NavBar() {
           onClick={() => {
             navigate("/");
           }}
-          icon={<GoHomeFill />}
         >
+          {<GoHomeFill />}
           Home
         </Button>
         <Button
@@ -39,8 +39,8 @@ function NavBar() {
           onClick={() => {
             navigate("/products");
           }}
-          icon={<FaClipboardList />}
         >
+          {<FaClipboardList />}
           Products
         </Button>
       </div>
