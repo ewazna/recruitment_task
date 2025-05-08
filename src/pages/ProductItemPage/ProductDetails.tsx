@@ -1,10 +1,6 @@
-import type { ProductDetailsProps } from "./ProductDetailsprops";
+import type { ProductDetailsProps } from "./ProductDetailsProps";
 
 function ProductDetails({ product }: ProductDetailsProps) {
-  if (!product) {
-    return <>Product not found</>;
-  }
-
   const { title, image, description, price, category, rating } = product;
 
   return (
