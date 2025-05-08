@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import type { ProductItemProps } from "./ProductItemProp";
 
 function ProductItem({ id, image, title, price }: ProductItemProps) {
   return (
-    <a
-      href={`/products/${id}`}
+    <Link
+      to={`/products/${id}`}
       className="card mb-3 container-sm d-flex product-container cursor-pointer"
     >
       <figure className="row g-0">
@@ -21,7 +22,7 @@ function ProductItem({ id, image, title, price }: ProductItemProps) {
           </p>
         </figcaption>
       </figure>
-    </a>
+    </Link>
   );
 }
 
