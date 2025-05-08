@@ -76,17 +76,22 @@ function ProductsPage() {
       }
 
       content = (
-        <main className="main-container">
-          <ContextMenu name="Sorting" className="context-menu">
+        <main className="mt-5 pt-2">
+          <ContextMenu
+            name="Sorting"
+            icon={<TiArrowUnsorted />}
+            className="context-menu"
+          >
             {sortingOptions.map((option) => {
               return (
                 <div key={option.sortType}>
                   <Button
-                    className="sorting-btn"
                     onClick={(e) => {
                       e.stopPropagation();
                       setSortType(option.sortType);
                     }}
+                    active={option.sortType === sortType}
+                    className="w-100"
                   >
                     {option.label} {option.icon}
                   </Button>

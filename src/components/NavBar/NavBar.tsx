@@ -1,12 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import Button from "../Button/Button";
+import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { GoHomeFill } from "react-icons/go";
 import { FaClipboardList } from "react-icons/fa";
 
 function NavBar() {
-  const navigate = useNavigate();
-
   const [activeTab, setActiveTab] = useState<number>(0);
 
   if (window.location.pathname.includes("/products")) {
@@ -20,30 +17,36 @@ function NavBar() {
   }
 
   return (
-    <div className="relative w-full h-full">
+    <div className="h-100">
       <Outlet />
-      <div className="navigation">
-        <Button
-          className="nav-btn"
-          active={activeTab === 0}
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          {<GoHomeFill />}
-          Home
-        </Button>
-        <Button
-          className="nav-btn"
-          active={activeTab === 1}
-          onClick={() => {
-            navigate("/products");
-          }}
-        >
-          {<FaClipboardList />}
-          Products
-        </Button>
-      </div>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary position-absolute top-0 left-0 right-0 w-100 shadow">
+        <ul className="navbar-nav mb-2 mb-lg-0 d-flex flex-row gap-3 ms-5">
+          <li className="nav-item">
+            <a
+              className={`nav-link d-flex align-items-center ${
+                activeTab === 0 ? "active" : ""
+              }`}
+              aria-current="page"
+              href="/"
+            >
+              {<GoHomeFill className="me-1" />}
+              Home
+            </a>
+          </li>
+          <li className="nav-item ">
+            <a
+              className={`nav-link d-flex align-items-center ${
+                activeTab === 1 ? "active" : ""
+              }`}
+              aria-current="page"
+              href="/products"
+            >
+              {<FaClipboardList className="me-1" />}
+              Products
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

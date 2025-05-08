@@ -2,7 +2,7 @@ import { useRef } from "react";
 import type { ContextMenuProps } from "./ContextMenuProps";
 import Button from "../Button/Button";
 
-function ContextMenu({ name, children }: ContextMenuProps) {
+function ContextMenu({ name, icon, children }: ContextMenuProps) {
   const contextMenuTrigger = useRef<HTMLButtonElement>(null);
   const contextMenuPanel = useRef<HTMLDivElement>(null);
 
@@ -17,22 +17,26 @@ function ContextMenu({ name, children }: ContextMenuProps) {
   };
 
   return (
-    <>
+    <div className="d-flex container-sm justify-content-end sort-container">
       <Button
         ref={contextMenuTrigger}
         type="button"
         onClick={handleMenuClick}
         popoverTarget="contextMenu"
         popoverTargetAction="toggle"
-        className="trigger-btn"
       >
-        {name}
+        {name} {icon}
       </Button>
 
-      <div popover="auto" id="contextMenu" ref={contextMenuPanel}>
-        <div className="context-menu">{children}</div>
+      <div
+        popover="auto"
+        id="contextMenu"
+        ref={contextMenuPanel}
+        className="ps-3 pe-3 m-0 p-0 border-0 rounded-3 shadow"
+      >
+        <div>{children}</div>
       </div>
-    </>
+    </div>
   );
 }
 
