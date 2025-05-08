@@ -51,3 +51,8 @@ a:hover {
 .details-container {
   max-width:500px;
 }
+
+.large-spinner {
+  width:4em;
+  height:4em
+}

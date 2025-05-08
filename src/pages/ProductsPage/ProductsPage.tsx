@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import {
   TiArrowUnsorted,
   TiArrowSortedDown,
@@ -9,11 +9,12 @@ import { SortType } from "../../models";
 import ProductItem from "./ProductItem";
 import ContextMenu from "../../components/ContextMenu/ContextMenu";
 import Button from "../../components/Button/Button";
+import Spinner from "../../components/Spinner/Spinner";
 
 function ProductsPage() {
   const [sortType, setSortType] = useState(SortType.Default);
+  const [content, setContent] = useState<JSX.Element | null>(<Spinner />);
 
-  let content;
   const sortingOptions = [
     {
       label: "Default",
@@ -46,78 +47,82 @@ function ProductsPage() {
   const products = productsFetchingResult.data;
 
   useEffect(() => {
-    if (productsFetchingResult.error) {
-      content = <p>Error during product fetching</p>;
-    }
-  }, [productsFetchingResult]);
-
-  if (productsFetchingResult.isFetching) {
-    content = <>Loading</>;
-  } else if (productsFetchingResult.isSuccess) {
-    if (products) {
-      const sortedProducts = [...products];
-      switch (sortType) {
-        case "none":
-          break;
-        case SortType.TitleAsc:
-          sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
-          break;
-        case SortType.TitleDesc:
-          sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
-          break;
-        case SortType.PriceAsc:
-          sortedProducts.sort((a, b) => a.price - b.price);
-          break;
-        case SortType.PriceDesc:
-          sortedProducts.sort((a, b) => b.price - a.price);
-          break;
-        default:
-          break;
-      }
-
-      content = (
-        <main className="mt-5 pt-2">
-          <ContextMenu
-            name="Sorting"
-            icon={<TiArrowUnsorted />}
-            className="context-menu"
-          >
-            {sortingOptions.map((option) => {
-              return (
-                <div key={option.sortType}>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSortType(option.sortType);
-                    }}
-                    active={option.sortType === sortType}
-                    className="w-100"
-                  >
-                    {option.label} {option.icon}
-                  </Button>
-                </div>
-              );
-            })}
-          </ContextMenu>
-          <ul>
-            {sortedProducts.map((product) => {
-              return (
-                <li key={product.title}>
-                  <ProductItem
-                    id={product.id}
-                    image={product.image}
-                    title={product.title}
-                    price={product.price}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </main>
+    if (productsFetchingResult.isFetching) {
+      setContent(<Spinner />);
+    } else if (productsFetchingResult.isError) {
+      setContent(
+        <div className="d-flex flex-column justify-content-center align-items-center w-100 min-vh-100">
+          <img alt="error_image" src="/error.png" className="w-25 h-25" />
+          <p className="mt-2">Error during product fetching</p>
+        </div>
       );
+    } else if (productsFetchingResult.isSuccess && products) {
+      if (products) {
+        const sortedProducts = [...products];
+        switch (sortType) {
+          case SortType.Default:
+            break;
+          case SortType.TitleAsc:
+            sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+          case SortType.TitleDesc:
+            sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
+            break;
+          case SortType.PriceAsc:
+            sortedProducts.sort((a, b) => a.price - b.price);
+            break;
+          case SortType.PriceDesc:
+            sortedProducts.sort((a, b) => b.price - a.price);
+            break;
+          default:
+            break;
+        }
+
+        setContent(
+          <main className="mt-5 pt-2">
+            <ContextMenu
+              name="Sorting"
+              icon={<TiArrowUnsorted />}
+              className="context-menu"
+            >
+              {sortingOptions.map((option) => {
+                return (
+                  <div key={option.sortType}>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSortType(option.sortType);
+                      }}
+                      active={option.sortType === sortType}
+                      className="w-100"
+                    >
+                      {option.label} {option.icon}
+                    </Button>
+                  </div>
+                );
+              })}
+            </ContextMenu>
+            <ul>
+              {sortedProducts.map((product) => {
+                return (
+                  <li key={product.id}>
+                    <ProductItem
+                      id={product.id}
+                      image={product.image}
+                      title={product.title}
+                      price={product.price}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </main>
+        );
+      }
     }
-    return <>{content}</>;
-  }
+  }, [productsFetchingResult, sortType, products]);
+
+  return <>{content}</>;
 }
 
 export default ProductsPage;
