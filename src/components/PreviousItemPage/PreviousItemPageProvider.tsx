@@ -17,7 +17,10 @@ const PreviousItemPageContext = createContext<PreviousItemPageState>({
 });
 
 function PreviousItemPageProvider({ children }: PropsWithChildren) {
-  const [previousItemPage, setPreviousItemPage] = useState<string | null>(null);
+  const savePath = sessionStorage.getItem("previousItemPage");
+  const [previousItemPage, setPreviousItemPage] = useState<string | null>(
+    savePath
+  );
 
   const context: PreviousItemPageState = {
     previousItemPage,
@@ -29,6 +32,7 @@ function PreviousItemPageProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (location.pathname.includes("/products/")) {
       setPreviousItemPage(location.pathname);
+      sessionStorage.setItem("previousItemPage", location.pathname);
     }
   }, [location]);
 
